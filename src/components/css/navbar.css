@@ -1,0 +1,30 @@
+.toothbox-navbar {
+  background: linear-gradient(90deg, #007bff 0%, #e8c420 100%); /* พื้นหลังไล่สี */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* เงาเล็กน้อย */
+  transition: background 0.3s ease;
+}
+
+.toothbox-navbar .nav-link {
+  color: white !important;        /* สีข้อความในเมนู */
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.toothbox-navbar .nav-link:hover {
+  color: #ffe100 !important;      /* สีตอน hover */
+}
+
+.toothbox-navbar img {
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+}
+
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30'
+  xmlns='img/daily_life.png'%3E%3Cpath stroke='rgba%28255,255,255,0.9%29' 
+  stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' 
+  d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+} */

@@ -1,0 +1,42 @@
+/* main.css */
+
+.inp {
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+  gap: 15px; /* ระยะห่างระหว่างช่อง input */
+  margin-bottom: 20rem;
+}
+
+.inp input {
+  width: 250px;
+  padding: 10px 15px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: #fff;
+}
+
+/* เมื่อโฟกัสที่ช่อง input */
+.inp input:focus {
+  box-shadow: 0 0 8px rgba(0,123,255,0.5);
+  transform: scale(1.03);
+}
+
+/* เมื่อเอาเมาส์ไปวาง */
+.inp input:hover {
+  border-color: #aaa;
+}
+
+/* สำหรับมือถือ */
+@media (max-width: 600px) {
+  .inp {
+    flex-direction: column;
+  }
+
+  .inp input {
+    width: 80%;
+  }
+}
