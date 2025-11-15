@@ -1,5 +1,10 @@
 import './css/navbar.css'
+import Button from './Button';
+import { useNavigate } from 'react-router-dom';
+
+
 const Nav = () => {
+    const navigate = useNavigate();
     return (
         <>
             <nav className="navbar navbar-expand-lg fixed-top toothbox-navbar">
@@ -24,16 +29,18 @@ const Nav = () => {
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNav" style={{marginRight:'10rem'}}>
                         <ul className="navbar-nav">
                             <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link active" aria-current="page" href="/*">Home</a>
+                                <a className="nav-link active" aria-current="page" href="/*">หน้าหลัก</a>
                             </li>
                             <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link" href="#">Features</a>
+                                <div onClick={() => navigate('/Create')}>
+                                <Button text="สร้างแฟ้มของคุณ" />
+                            </div>
                             </li>
                             <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link" href="#">Pricing</a>
+                                <a className="nav-link" href="Promotion">อัพเกรด</a>
                             </li>
                             <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link" href="/Register">Sign in / Sign up</a>
+                                <a className="nav-link" href="Register">สมัครสมาชิก/เข้าสู่ระบบ</a>
                             </li>
                         </ul>
                     </div>

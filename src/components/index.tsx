@@ -3,7 +3,7 @@ import './css/main.css'
 const Main = () => {
     return (
         <div className="container main-content-container"> {/* **เพิ่ม Container หลัก** */}
-            <h2 className="main-title">Daily Life</h2> {/* **ใช้ Class แทน Inline Style** */}
+            <h2 className="main-title" style={{marginTop:'5rem'}}>Daily Life</h2> {/* **ใช้ Class แทน Inline Style** */}
             
             {/* **ส่วนค้นหา** */}
             <div className="row g-3 align-items-end mb-5"> {/* ใช้ g-3 สำหรับระยะห่าง, align-items-end จัดให้อยู่บรรทัดเดียวกัน */}

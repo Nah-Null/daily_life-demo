@@ -1,4 +1,4 @@
-import Nav  from "./nav-bar"
+import Nav  from "./Nav-bar"
 const Reg = () => {
     return (
         <>
