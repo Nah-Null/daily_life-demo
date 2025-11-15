@@ -1,16 +1,36 @@
+// Nav.tsx
 import './css/navbar.css'
-import Button from './ButtonHover1';
+import Button from './ButtonHover1'; // สมมติว่า ButtonHover1 ใช้สำหรับ 'สร้างแฟ้มของคุณ'
 import { useNavigate } from 'react-router-dom';
 
 
 const Nav = () => {
     const navigate = useNavigate();
+    
+    // ฟังก์ชันสำหรับจัดการ NavLink Clicks
+    const handleNavigation = (path: string, isButton: boolean = false) => {
+        if (!isButton) {
+            // ป้องกันการ navigate ซ้ำถ้าเป็นลิงก์ภายนอก หรือใช้ Link component แทน
+            if (path.startsWith('/')) {
+                navigate(path);
+            }
+        }
+    };
+
     return (
         <>
-            <nav className="navbar navbar-expand-lg fixed-top toothbox-navbar">
-                <div className="container-fluid">
-                    {/* โลโก้ */}
-                    <img src="img/daily_life.png" alt="logo" style={{ width: '5rem' }} />
+            {/* Navbar หลัก: fixed-top และใช้ class custom-navbar สำหรับสไตล์ */}
+            <nav className="navbar navbar-expand-lg fixed-top custom-navbar">
+                <div className="container-fluid container-xl"> {/* ใช้ container-xl เพื่อจำกัดความกว้างบนจอใหญ่ */}
+                    
+                    {/* โลโก้/แบรนด์: ใช้ class สำหรับกำหนดขนาด */}
+                    <a className="navbar-brand" href="/">
+                         <img 
+                            src="img/daily_life.png" 
+                            alt="Daily Life Logo" 
+                            className="navbar-logo icon" 
+                        />
+                    </a>
 
                     {/* ปุ่ม burger */}
                     <button
@@ -22,25 +42,48 @@ const Nav = () => {
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <span className="navbar-toggler-icon"></span>
+                        {/* ไอคอน Toggler: ใช้ class เพื่อกำหนดสีขาวใน CSS */}
+                        <span className="navbar-toggler-icon custom-toggler-icon"></span>
                     </button>
 
-                    {/* เมนู */}
-                    <div className="collapse navbar-collapse justify-content-end" id="navbarNav" style={{marginRight:'10rem'}}>
-                        <ul className="navbar-nav">
-                            <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link active" aria-current="page" href="/*">หน้าหลัก</a>
+                    {/* เมนูที่ Collapse ได้ */}
+                    <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+                        
+                        {/* nav-list-custom สำหรับจัดระยะห่างของ items ใน CSS */}
+                        <ul className="navbar-nav nav-list-custom"> 
+                            
+                            {/* หน้าหลัก */}
+                            <li className="nav-item">
+                                {/* ใช้ onClick สำหรับการนำทาง React Router */}
+                                <a 
+                                    className="nav-link active nav-text-custom" 
+                                    aria-current="page" 
+                                    onClick={() => handleNavigation('/')}
+                                    href="/"
+                                >
+                                    หน้าหลัก
+                                </a>
                             </li>
-                            <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <div onClick={() => navigate('/Create')}>
-                                <Button text="สร้างแฟ้มของคุณ" />
-                            </div>
+                            
+                            {/* สร้างแฟ้มของคุณ (ใช้ Button Component) */}
+                            <li className="nav-item">
+                                <div onClick={() => navigate('/Create')} className="nav-button-wrapper">
+                                    <Button text="สร้างแฟ้มของคุณ" />
+                                </div>
                             </li>
-                            <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link" href="Promotion">อัพเกรด</a>
+                            
+                            {/* อัพเกรด */}
+                            <li className="nav-item">
+                                <a className="nav-link nav-text-custom" href="/Promotion">
+                                    อัพเกรด
+                                </a>
                             </li>
-                            <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link" href="Register">สมัครสมาชิก/เข้าสู่ระบบ</a>
+                            
+                            {/* สมัครสมาชิก/เข้าสู่ระบบ */}
+                            <li className="nav-item">
+                                <a className="nav-link nav-text-custom" href="/Register">
+                                    สมัครสมาชิก/เข้าสู่ระบบ
+                                </a>
                             </li>
                         </ul>
                     </div>

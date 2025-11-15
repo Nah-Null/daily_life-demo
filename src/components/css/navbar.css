@@ -1,30 +1,74 @@
-.toothbox-navbar {
-  background: linear-gradient(90deg, #007bff 0%, #e8c420 100%); /* พื้นหลังไล่สี */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* เงาเล็กน้อย */
-  transition: background 0.3s ease;
+/* navbar.css */
+
+/* --- 1. Navbar Base Style --- */
+
+.custom-navbar {
+    /* ปรับพื้นหลังไล่สี: ใช้สีฟ้าอ่อนและทองที่นุ่มนวลกว่า */
+    background: linear-gradient(90deg, #0093E9 0%, #E7B800 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* เงาที่ชัดเจนและดูพรีเมียมขึ้น */
+    transition: background 0.3s ease;
+    padding: 0.75rem 0; /* เพิ่ม padding แนวตั้ง */
 }
 
-.toothbox-navbar .nav-link {
-  color: white !important;        /* สีข้อความในเมนู */
-  font-weight: 500;
-  transition: color 0.3s ease;
+/* --- 2. Logo & Branding --- */
+
+.navbar-logo {
+    width: 3.5rem; /* ปรับขนาดโลโก้ให้เหมาะสม */
+    height: auto;
+    /* เพิ่ม filter ให้ดูสว่างและเข้ากับพื้นหลังไล่สี */
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)); 
+    transition: transform 0.3s ease;
 }
 
-.toothbox-navbar .nav-link:hover {
-  color: #ffe100 !important;      /* สีตอน hover */
+.navbar-logo:hover {
+    transform: scale(1.05); /* เอฟเฟกต์เล็กน้อยเมื่อ Hover */
 }
 
-.toothbox-navbar img {
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+/* --- 3. Navigation Links (Menu) --- */
+
+.nav-text-custom {
+    color: white !important; /* สีข้อความขาว */
+    font-weight: 600; /* ตัวหนาขึ้น */
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem !important; /* เพิ่ม padding ให้คลิกง่าย */
+    border-radius: 0.5rem;
 }
+
+/* Hover Effect */
+.nav-text-custom:hover, 
+.nav-text-custom.active {
+    color: #ffd700 !important; /* สีทองสว่าง */
+    background-color: rgba(255, 255, 255, 0.15); /* พื้นหลังจางๆ เมื่อ hover */
+}
+
+/* จัดระยะห่างของแต่ละ Nav Item บนจอใหญ่ */
+@media (min-width: 992px) {
+    .nav-list-custom .nav-item {
+        /* ใช้ margin-left แทน padding-right */
+        margin-left: 1.5rem; 
+    }
+}
+
+/* --- 4. Custom Toggler (สำหรับ Mobile) --- */
 
 .navbar-toggler {
-  border-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 0.25rem;
 }
 
-/* .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30'
-  xmlns='img/daily_life.png'%3E%3Cpath stroke='rgba%28255,255,255,0.9%29' 
-  stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' 
-  d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-} */
+.custom-toggler-icon {
+    /* กำหนดสีของ Hamburger Icon เป็นสีขาว */
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* จัดสไตล์สำหรับปุ่ม ButtonHover1 (เพื่อไม่ให้ดูแปลกแยก) */
+.nav-button-wrapper {
+    /* จัดกึ่งกลางปุ่มเมื่ออยู่ภายใน nav-item */
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.icon{
+  width: 5rem;
+}
