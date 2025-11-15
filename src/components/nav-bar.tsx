@@ -24,7 +24,7 @@ const Nav = () => {
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNav" style={{marginRight:'10rem'}}>
                         <ul className="navbar-nav">
                             <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link active" aria-current="page" href="#">Home</a>
+                                <a className="nav-link active" aria-current="page" href="/*">Home</a>
                             </li>
                             <li className="nav-item" style={{paddingRight:'2rem'}}>
                                 <a className="nav-link" href="#">Features</a>
@@ -33,7 +33,7 @@ const Nav = () => {
                                 <a className="nav-link" href="#">Pricing</a>
                             </li>
                             <li className="nav-item" style={{paddingRight:'2rem'}}>
-                                <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+                                <a className="nav-link" href="/Register">Sign in / Sign up</a>
                             </li>
                         </ul>
                     </div>
