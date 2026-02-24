@@ -58,6 +58,7 @@ interface LanguageSkill {
 }
 
 interface SkillsAbilities {
+    others_skills?: string | null;
     details?: string | null;
     language_skills?: LanguageSkill[] | null;
 }
@@ -391,22 +392,16 @@ const Portfolio = () => {
         ]);
     };
 
-    const removeActivity = (index: number) => {
-        setActivitiesCertificates(prev => {
-            const copy = [...prev];
-            copy.splice(index, 1);
-            return copy.length > 0 ? copy : [{
-                number: 1,
-                name_project: '',
-                date: '',
-                photo: null,
-                details: '',
-                day: 1,
-                month: 0,
-                year: new Date().getFullYear()
-            }];
-        });
-    };
+    const [skillsAbilities, setSkillsAbilities] = useState<SkillsAbilities>({
+        details: '',
+        language_skills: [
+            { language: '', listening: '', speaking: '', reading: '', writing: '' }
+        ]
+    });
+
+    const [activitiesCertificates, setActivitiesCertificates] = useState<ActivityCertificate[]>([
+        { number: 1, name_project: '', date: '', photo: '', details: '' }
+    ]);
 
     const updateUniversity = (index: number, field: keyof UniversityChoice, value: any) => {
         setUniversityChoice(prev => {
@@ -773,25 +768,66 @@ const Portfolio = () => {
                         ข้อมูลครบถ้วน
                     </div>
                     <div className={styles["progress-info-btn-group"]}>
-                        <button
-                            className={styles["progress-info-btn"]}
-                            onClick={handleSavePort}
-                            disabled={saving}
-                        >
+                        <button className={styles["progress-info-btn"]} onClick={handleSavePort} disabled={saving}>
                             {saving ? 'กำลังบันทึก...' : 'สร้างพอต'}
                         </button>
+                        <PDFDownloadLink
+                            key={JSON.stringify(Personal)}
+                            document={<PortfolioPDF
+                                introduce={Personal.introduce ?? ''}
+                                first_name={Personal.first_name ?? ''}
+                                last_name={Personal.last_name ?? ''}
+                                prefix={Personal.prefix ?? ''}
+                                birth_day={day ?? ''}
+                                birth_month={month ?? ''}
+                                birth_year={year ?? ''}
+                                nationality={Personal.nationality ?? ''}
+                                id_card={Personal.national_id ?? ''}
+                                phonenumber1={Personal.phone_number1 ?? ''}
+                                phonenumber2={Personal.phone_number2 ?? ''}
+                                email={Personal.email ?? ''}
+                                address={Personal.address ?? ''}
+                                province={Personal.province ?? ''}
+                                district={Personal.district ?? ''}
+                                subdistrict={Personal.subdistrict ?? ''}
+                                postal_code={Personal.postal_code ?? ''}
+                                height={Personal.height ?? ''}
+                                weight={Personal.weight ?? ''}
+                                gender={Personal.gender ?? ''}
+                                marital_status={Personal.marital_status ?? ''}
+                                disability={Personal.disability ?? ''}
+                                military_status={Personal.military_status ?? ''}
+                                personal_image={Personal.image ? (Personal.image instanceof File ? URL.createObjectURL(Personal.image) : String(Personal.image)) : undefined}
+
+                            />}
+
+                            fileName={
+                                Personal.portfolio_name && Personal.portfolio_name.trim() !== ''
+                                    ? Personal.portfolio_name
+                                    : 'Portfolio.pdf'
+                            }
+                        >
+                            {({ loading }) => (
+                                <button
+                                    type="button"
+                                    style={{
+                                        padding: '8px 16px',
+                                        backgroundColor: loading ? '#ccc' : '#e67e22',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        cursor: loading ? 'not-allowed' : 'pointer'
+                                    }}
+                                >
+                                    {loading ? 'กำลังสร้าง PDF...' : 'Export to PDF'}
+                                </button>
+                            )}
+                        </PDFDownloadLink>
                     </div>
                     {saveMessage && (
-                        <div style={{
-                            marginTop: 8,
-                            color: saveMessage.startsWith('เกิดข้อผิดพลาด') ? 'crimson' : 'green',
-                            padding: '10px',
-                            backgroundColor: saveMessage.startsWith('เกิดข้อผิดพลาด') ? '#ffe0e0' : '#e0ffe0',
-                            borderRadius: '4px'
-                        }}>
-                            {saveMessage}
-                        </div>
+                        <div style={{ marginTop: 8, color: saveMessage.startsWith('เกิดข้อผิดพลาด') ? 'crimson' : 'green' }}>{saveMessage}</div>
                     )}
+                    {/* <p className={styles["progress-caution"]}>*หมายเหตุ :เมื่อกดปุ่มเผยแพร่ ระบบจะใช้เวลาประมวลผลภายใน 30 นาที ทางมหาวิทยาลัยจึงจะสามารถมองเห็นแฟ้มสะสมผลงานของคุณได้</p> */}
                 </div>
             </div>
 
@@ -871,6 +907,7 @@ const Portfolio = () => {
                                             value={day}
                                             onChange={(e) => setDay(Number(e.target.value))}
                                         >
+                                        
                                             {Array.from({ length: daysInMonth }, (_, i) => (
                                                 <option key={i + 1} value={i + 1}>{i + 1}</option>
                                             ))}
@@ -880,15 +917,26 @@ const Portfolio = () => {
                                             value={month}
                                             onChange={(e) => setMonth(Number(e.target.value))}
                                         >
-                                            {thaiMonths.map((m) => (
-                                                <option key={m.value} value={m.value}>{m.name}</option>
-                                            ))}
+                                           
+                                            <option value="มกราคม">มกราคม</option>
+                                            <option value="กุมภาพันธ์">กุมภาพันธ์</option>
+                                            <option value="มีนาคม">มีนาคม</option>
+                                            <option value="เมษายน">เมษายน</option>
+                                            <option value="พฤษภาคม">พฤษภาคม</option>
+                                            <option value="มิถุนายน">มิถุนายน</option>
+                                            <option value="กรกฎาคม">กรกฎาคม</option>
+                                            <option value="สิงหาคม">สิงหาคม</option>
+                                            <option value="กันยายน">กันยายน</option>
+                                            <option value="ตุลาคม">ตุลาคม</option>
+                                            <option value="พฤศจิกายน">พฤศจิกายน</option>
+                                            <option value="ธันวาคม">ธันวาคม</option>
                                         </select>
                                         <select
                                             className={styles["port-input"]}
                                             value={year}
                                             onChange={(e) => setYear(Number(e.target.value))}
                                         >
+                                            
                                             {Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i).map((y) => (
                                                 <option key={y} value={y}>{y + 543}</option>
                                             ))}
@@ -1145,28 +1193,81 @@ const Portfolio = () => {
                                 value={skillsAbilities.details || ''}
                                 onChange={e => updateSkills('details', e.target.value)}
                             />
-
-                            <div className={`${styles["personal-section"]} ${styles["add-education"]}`} style={{ marginBottom: '20px' }}>
-                                <h3>ทักษะด้านภาษาต่างประเทศ</h3>
-                                <button
-                                    onClick={addLanguageSkill}
-                                    style={{ padding: '8px 16px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-                                >
-                                    + เพิ่มภาษา
-                                </button>
+                            <div className={`${styles["personal-section"]} ${styles["add-education"]}`}>
+                                <p>ทักษะด้านภาษาต่างประเทศ</p>
+                                <button>เพิ่มภาษา</button>
                             </div>
-
-                            {renderLanguageSkills()}
-
+                            <div className={styles["personal-section"]}>
+                                <div className={styles["name-group"]}>
+                                    <p>ภาษา</p>
+                                    <select
+                                        className={styles["port-input"]}
+                                        onClick={e => e.stopPropagation()}
+                                        value={skillsAbilities.language_skills?.[0]?.language || ''}
+                                        onChange={e => updateLanguageSkill(0, 'language', e.target.value)}
+                                    >
+                                        <option value="อังกฤษ">อังกฤษ</option>
+                                        <option value="จีน">จีน</option>
+                                        <option value="ญี่ปุ่น">ญี่ปุ่น</option>
+                                    </select>
+                                </div>
+                                <div className={styles["name-group"]}>
+                                    <p>การฟัง</p>
+                                    <select
+                                        className={styles["port-input"]}
+                                        onClick={e => e.stopPropagation()}
+                                        value={skillsAbilities.language_skills?.[0]?.listening || ''}
+                                        onChange={e => updateLanguageSkill(0, 'listening', e.target.value)}
+                                    >
+                                        <option value="พอใช้">พอใช้</option>
+                                        <option value="ดี">ดี</option>
+                                        <option value="ดีมาก">ดีมาก</option>
+                                    </select>
+                                </div>
+                                <div className={styles["name-group"]}>
+                                    <p>การพูด</p>
+                                    <select
+                                        className={styles["port-input"]}
+                                        onClick={e => e.stopPropagation()}
+                                        value={skillsAbilities.language_skills?.[0]?.speaking || ''}
+                                        onChange={e => updateLanguageSkill(0, 'speaking', e.target.value)}
+                                    >
+                                        <option value="พอใช้">พอใช้</option>
+                                        <option value="ดี">ดี</option>
+                                        <option value="ดีมาก">ดีมาก</option>
+                                    </select>
+                                </div>
+                                <div className={styles["name-group"]}>
+                                    <p>การอ่าน</p>
+                                    <select
+                                        className={styles["port-input"]}
+                                        onClick={e => e.stopPropagation()}
+                                        value={skillsAbilities.language_skills?.[0]?.reading || ''}
+                                        onChange={e => updateLanguageSkill(0, 'reading', e.target.value)}
+                                    >
+                                        <option value="พอใช้">พอใช้</option>
+                                        <option value="ดี">ดี</option>
+                                        <option value="ดีมาก">ดีมาก</option>
+                                    </select>
+                                </div>
+                                <div className={styles["name-group"]}>
+                                    <p>การเขียน</p>
+                                    <select
+                                        className={styles["port-input"]}
+                                        onClick={e => e.stopPropagation()}
+                                        value={skillsAbilities.language_skills?.[0]?.writing || ''}
+                                        onChange={e => updateLanguageSkill(0, 'writing', e.target.value)}
+                                    >
+                                        <option value="พอใช้">พอใช้</option>
+                                        <option value="ดี">ดี</option>
+                                        <option value="ดีมาก">ดีมาก</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div className={styles["personal-section"]}>
                                 <p>ทักษะอื่นๆ</p>
                             </div>
-                            <textarea
-                                className={styles["port-textarea"]}
-                                rows={4}
-                                style={{ resize: 'vertical' }}
-                                placeholder="ระบุทักษะอื่นๆ เช่น การใช้คอมพิวเตอร์, ทักษะการสื่อสาร, ฯลฯ"
-                            />
+                            <textarea className={styles["port-textarea"]} onClick={e => e.stopPropagation()} rows={4} style={{ resize: 'vertical' }} />
                         </div>
                     </div>
                 )}
@@ -1256,7 +1357,7 @@ const Portfolio = () => {
                                 </div>
                             </div>
                             <div className={styles["personal-section"]}>
-                                <div className={styles["name-group"]} style={{ width: '100%' }}>
+                                <div className={styles["name-group"]}>
                                     <p>เหตุผลที่สนใจมหาวิทยาลัยนี้</p>
                                     <textarea
                                         className={styles["port-textarea"]}
